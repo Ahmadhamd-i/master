@@ -13,6 +13,7 @@ class BusInfo extends Model
     public $timestamps = false;
 
     protected $fillable = [
+        'Bus_ID',
         'Bus_Supervisor_ID',
         'Bus_Driver_ID',
         'Bus_Line_Name'

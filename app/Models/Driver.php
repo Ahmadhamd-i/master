@@ -13,8 +13,8 @@ class Driver extends Model
     public $timestamps = false;
 
     protected $fillable = [
+        'ID',
         'Full_Name',
-        'Image',
         'Phone',
         'Email'
     ];

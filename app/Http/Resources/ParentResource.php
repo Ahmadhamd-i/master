@@ -17,8 +17,7 @@ class ParentResource extends JsonResource
 
         return [
             'ID' => $this->ID,
-            'Full_Name' => $this->Full_Name,
-            'Password' => $this->Password,
+            'Parent_Name' => $this->Full_Name,
             'Child_Name' => $this->Child_Name,
             'Email' => $this->Email,
             'Phone' => $this->Phone,
