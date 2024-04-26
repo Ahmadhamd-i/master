@@ -20,6 +20,8 @@ return new class extends Migration
             $table->integer('Phone');
             $table->string('Address');
             $table->string('location');
+            $table->rememberToken();
+            $table->timestamps();
 
             /* $table->primary(['ID']); */
         });

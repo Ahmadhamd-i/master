@@ -20,6 +20,8 @@ return new class extends Migration
             $table->integer('Phone')->unique('phone');
             $table->string('address');
             $table->integer('Supervisor_ID');
+            $table->rememberToken();
+            $table->timestamps();
         });
     }
 

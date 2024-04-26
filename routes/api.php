@@ -1,12 +1,8 @@
 <?php
 
-use App\Http\Controllers\Api\BusesController;
-use App\Http\Controllers\Api\DriverController;
 use App\Http\Controllers\Api\ParentController;
 use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\SupervisorController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,12 +15,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+//Admin Route
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function ($router) {
+    Route::post('/login', [AuthController::class, 'login']);
+    // EX "http://127.0.0.1:8000/api/auth/login"
+    Route::post('/register', [AuthController::class, 'register']);
+    // EX "http://127.0.0.1:8000/api/auth/register"
+    Route::post('/logout', [AuthController::class, 'logout']);
+    // EX "http://127.0.0.1:8000/api/auth/logout"
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::get('/user-profile', [AuthController::class, 'userProfile']);
+    // EX "http://127.0.0.1:8000/api/auth/user-profile"
+
 });
 
-//web Dashboard Apis
-//Supervisor
+Route::middleware(['jwt.verify'])->group(function () {
+    //web Dashboard Apis
+    //Supervisor
 {
     Route::post('/SV/store', [SupervisorController::class, 'store']);
     Route::get('/SV/getall', [SupervisorController::class, 'index']);
@@ -32,36 +42,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     Route::put('/SV/update/{id}', [SupervisorController::class, 'update']);
     Route::delete('/SV/delete/{id}', [SupervisorController::class, 'destroy']);
 }
+
 //Parent
 {
     Route::get('/parent/getall', [ParentController::class, 'index']);
-    Route::get('/parent/show/{id}', [ParentController::class, 'getParent']);
     Route::Post('/parent/store', [ParentController::class, 'store']);
+    Route::get('/parent/show/{id}', [ParentController::class, 'getParent']);
     Route::put('/parent/update/{id}', [ParentController::class, 'update']);
     Route::delete('/parent/delete/{id}', [ParentController::class, 'destroy']);
     /* Route::get('/parent/search/{Keyword}', [ParentController::class, 'search_parent']); */
 }
+
 //Student
-{
-    Route::get('/student/getall', [StudentController::class, 'index']);
-    Route::get('/student/show/{id}', [StudentController::class, 'getStudent']);
-    Route::Post('/student/store', [StudentController::class, 'store']);
-    Route::put('/student/update/{id}', [StudentController::class, 'update']);
-    Route::delete('/student/delete/{id}', [StudentController::class, 'destroy']);
-}
-//Driver   
-{
-    Route::get('/driver/getall', [DriverController::class, 'index']);
-    Route::get('/driver/show/{id}', [DriverController::class, 'getdriver']);
-    Route::Post('/driver/store', [DriverController::class, 'store']);
-    Route::put('/driver/update/{id}', [DriverController::class, 'update']);
-    Route::delete('/driver/delete/{id}', [DriverController::class, 'destroy']);
-}
-//BusInfo
-{
-    Route::get('/buses/getall', [BusesController::class, 'index']);
-    Route::get('/buses/show/{id}', [BusesController::class, 'getBusinfo']);
-    Route::Post('/buses/store', [BusesController::class, 'store']);
-    Route::put('/buses/update/{id}', [BusesController::class, 'update']);
-    Route::delete('/buses/delete/{id}', [BusesController::class, 'destroy']);
-}
+Route::get('/student/getall', [StudentController::class, 'index']);
+Route::get('/student/show/{id}', [StudentController::class, 'getStudent']);
+Route::Post('/student/store', [StudentController::class, 'store']);
+Route::put('/student/update/{id}', [StudentController::class, 'update']);
+Route::delete('/student/delete/{id}', [StudentController::class, 'destroy']);

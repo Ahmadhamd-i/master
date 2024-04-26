@@ -2,16 +2,61 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\SupervisorResource;
 use App\Models\Supervisor;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use function Laravel\Prompts\password;
+
 
 class SupervisorController extends Controller
 {
+
+    /**
+     * Create a new AuthController instance.
+     *
+     * @return void
+     */
+    public function __construct() {
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+    }
+
+    /**
+     * Get a JWT via given credentials.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function login(Request $request){
+    	$validator = Validator::make($request->all(), [
+            'Email' => 'required|email',
+            'Password' => 'required|string|min:6',
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        if (! $token = auth()->attempt($validator->validated())) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        return $this->createNewToken($token);
+    }
+
+    /**
+     * Get the token array structure.
+     *
+     * @param  string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function createNewToken($token){
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => Auth::factory()->getTTL() * 60,
+            'user' => auth()->user()
+        ]);
+    }
+
     public function store(Request $request)
     {
         // Validate request data
@@ -105,7 +150,7 @@ class SupervisorController extends Controller
         return response()->json(['message' => 'Supervisor updated successfully', 'supervisor' => new SupervisorResource($supervisor)], 201);
     }
 
-    //Delete Function 
+    //Delete Function
     public function destroy($id)
     {
         $supervisor = Supervisor::find($id);
@@ -117,4 +162,5 @@ class SupervisorController extends Controller
         $supervisor->destroy($id);
         return response()->json(['message' => 'Supervisor deleted successfully'], 200);
     }
+
 }
