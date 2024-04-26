@@ -32,7 +32,7 @@ Route::group([
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
     // EX "http://127.0.0.1:8000/api/auth/user-profile"
-    Route::post('/login', [SupervisorController::class, 'login']);
+
 });
 
 Route::middleware(['jwt.verify'])->group(function () {

@@ -12,6 +12,50 @@ use Illuminate\Support\Facades\Validator;
 class SupervisorController extends Controller
 {
 
+    /**
+     * Create a new AuthController instance.
+     *
+     * @return void
+     */
+    public function __construct() {
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+    }
+
+    /**
+     * Get a JWT via given credentials.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function login(Request $request){
+    	$validator = Validator::make($request->all(), [
+            'Email' => 'required|email',
+            'Password' => 'required|string|min:6',
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        if (! $token = auth()->attempt($validator->validated())) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        return $this->createNewToken($token);
+    }
+
+    /**
+     * Get the token array structure.
+     *
+     * @param  string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function createNewToken($token){
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => Auth::factory()->getTTL() * 60,
+            'user' => auth()->user()
+        ]);
+    }
+
     public function store(Request $request)
     {
         // Validate request data
@@ -107,5 +151,5 @@ class SupervisorController extends Controller
         $supervisor->destroy($id);
         return response()->json(['message' => 'Supervisor deleted successfully'], 200);
     }
-   
+
 }

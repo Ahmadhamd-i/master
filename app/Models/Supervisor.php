@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\Supervisor as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Supervisor extends Model
+class Supervisor extends Authenticatable implements JWTSubject
 {
-    use HasFactory;
+    use HasApiTokens, HasFactory, Notifiable;
 
     protected $table = 'supervisor';
     protected $primaryKey = 'ID';
@@ -48,6 +52,7 @@ class Supervisor extends Model
         'password',
         'remember_token',
     ];
+
     public function getJWTIdentifier() {
         return $this->getKey();
     }
