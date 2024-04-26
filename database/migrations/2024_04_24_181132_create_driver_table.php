@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('driver', function (Blueprint $table) {
             $table->integer('ID')->primary();
             $table->string('Full_Name');
-            $table->binary('Image');
+            $table->binary('Image')->default("NULL");
             $table->integer('Phone');
             $table->string('Email');
         });

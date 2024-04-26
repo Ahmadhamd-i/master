@@ -15,10 +15,10 @@ class BusesInfoResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
+            'Bus_ID' => $this->Bus_ID,
             'Bus_Supervisor_ID' => $this->Bus_Supervisor_ID,
             'Bus_Driver_ID' => $this->Bus_Driver_ID,
-            'Bus_Line_Name' => $this->Bus_Line_Name,
+            'Bus-Line' => $this->Bus_Line_Name,
 
         ];
     }

@@ -1,8 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ParentController;
 use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\SupervisorController;
@@ -53,17 +50,12 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::get('/parent/show/{id}', [ParentController::class, 'getParent']);
     Route::put('/parent/update/{id}', [ParentController::class, 'update']);
     Route::delete('/parent/delete/{id}', [ParentController::class, 'destroy']);
+    /* Route::get('/parent/search/{Keyword}', [ParentController::class, 'search_parent']); */
 }
 
 //Student
-{
-    Route::get('/student/getall', [StudentController::class, 'index']);
-    Route::Post('/student/store', [StudentController::class, 'store']);
-    Route::get('/student/show/{id}', [StudentController::class, 'getStudent']);
-    Route::put('/student/update/{id}', [StudentController::class, 'update']);
-    Route::delete('/student/delete/{id}', [StudentController::class, 'destroy']);
-}
-
-});
-
-
+Route::get('/student/getall', [StudentController::class, 'index']);
+Route::get('/student/show/{id}', [StudentController::class, 'getStudent']);
+Route::Post('/student/store', [StudentController::class, 'store']);
+Route::put('/student/update/{id}', [StudentController::class, 'update']);
+Route::delete('/student/delete/{id}', [StudentController::class, 'destroy']);

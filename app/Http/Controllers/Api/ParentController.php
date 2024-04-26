@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ParentResource;
 use Illuminate\Support\Facades\Validator;
-use App\Heelpers\Apiresponse;
+use App\Helpers\Apiresponse;
+use App\Helpers\ApiResponse as HelpersApiResponse;
 
 class ParentController extends Controller
 {
@@ -16,18 +17,16 @@ class ParentController extends Controller
     public function index() //Have route
     {
 
-        $parent = Parents::all();
-        return ParentResource::collection($parent);
+        $parents = Parents::all();
+        return Apiresponse::sendresponse(200, "parents", $parents);
     }
 
     public function getParent($ID)
     {
         $parent = Parents::findOrFail($ID);
         if ($parent) {
-            return response()->json([
-                'success' => true,
-                'parent' => $parent,
-            ]);
+
+            return Apiresponse::sendresponse(200, "parent", new ParentResource($parent));
         } {
             return $this->apiresponse(null, 'Parent Table Not Found', 404);
         }
@@ -43,7 +42,7 @@ class ParentController extends Controller
                 'Full_Name' => 'required',
                 'Password' => 'required ',
                 'Child_Name' => 'required',
-                'Email' => 'required',
+                'Email' => 'required|email',
                 'Phone' => 'required',
                 'address' => 'required',
                 'Supervisor_ID' => 'required',
@@ -65,11 +64,12 @@ class ParentController extends Controller
     public function update(Request $request, $id)
 
     {
-        $validator = Validator::make($request->only(['Full_Name', 'Email', 'address', 'Phone',]), [
-            'Full_Name' => 'required',
-            'Email' => 'required',
-            'address' => 'required',
-            'Phone' => 'required',
+        $validator = Validator::make($request->only(['Full_Name', 'Email', 'address', 'Phone', 'Child_Name',]), [
+            'Full_Name' => 'sometimes',
+            'Email' => 'sometimes|email',
+            'address' => 'sometimes',
+            'Phone' => 'sometimes',
+            'Child_Name' => 'string',
 
         ]);
 
@@ -78,17 +78,24 @@ class ParentController extends Controller
         if (!$Parent) {
             return response()->json(['message' => 'Parent not found'], 404);
         }
-
+        $oldparent = Parents::find($id);
+        if (!$oldparent) {
+            return response()->json(['message' => 'student not found'], 404);
+        }
         $Parent->update([
-            'Full_Name' => $request->Full_Name,
-            'Email' => $request->Email,
-            'Phone' => $request->Phone,
-            'Address' => $request->address,
+            'Full_Name' => $request->Full_Name ?? $oldparent->Full_Name,
+            'Email' => $request->Email ?? $oldparent->Email,
+            'Phone' => $request->Phone ?? $oldparent->Phone,
+            'Address' => $request->address ?? $oldparent->Address,
+            'Child_Name' => $request->Child_Name ?? $oldparent->Child_Name,
         ]);
 
 
-        return response()->json(['message' => 'Parent updated successfully', 'Parent' => $Parent], 200);
+        return response()->json(['message' => 'Parent updated successfully', 'Parent' => new ParentResource($Parent)], 200);
     }
+
+
+    //search missing
 
     public function destroy($id)
     {

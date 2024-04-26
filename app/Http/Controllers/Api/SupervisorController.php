@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Supervisor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -88,18 +89,22 @@ class SupervisorController extends Controller
     {
         $supervisors = Supervisor::all();
 
-        return response()->json(['supervisors' => $supervisors], 200);
+        return ApiResponse::sendresponse(200, 'Supervisors ', SupervisorResource::collection($supervisors));
     }
 
 
     public function getSupervisor($ID)
     {
-        $supervisor = Supervisor::findOrFail($ID);
-
-        return response()->json([
-            'success' => true,
-            'Supervisor' => $supervisor,
-        ]);
+        $Supervisor = Supervisor::findOrFail($ID);
+        if ($Supervisor) {
+            return ApiResponse::sendresponse(200, "Bus", new SupervisorResource($Supervisor));
+            /*  return response()->json([
+                'success' => true,
+                'Bus' => $Businfo,
+            ]); */
+        } {
+            return $this->apiresponse(null, 'Supervisor Table Not Found', 404);
+        }
     }
 
 
@@ -115,13 +120,13 @@ class SupervisorController extends Controller
 
         // Validate request data
         $validator = Validator::make(
-            $request->only(['Full_Name', 'Email', 'Phone', 'Address',]),
+            $request->only(['Full_Name', 'Email', 'Phone', 'Address', 'location']),
             [
-                'Full_Name' => 'required',
-                'Email' => 'required|email',
+                'Full_Name' => 'sometimes',
+                'Email' => 'sometimes|email',
                 'Phone' => 'numeric',
                 'Address' => 'string',
-
+                'location' => 'string',
             ]
         );
 
@@ -129,14 +134,20 @@ class SupervisorController extends Controller
             return response()->json(['message' => 'Validation failed', 'errors' => $validator->errors()], 400);
         }
 
+        $oldsupervisor = Supervisor::find($id);
+        if (!$oldsupervisor) {
+            return response()->json(['message' => 'student not found'], 404);
+        }
+
         $supervisor->update([
-            'Full_Name' => $request->Full_Name,
-            'Email' => $request->Email,
-            'Phone' => $request->Phone,
-            'Address' => $request->Address,
+            'Full_Name' => $request->Full_Name ?? $oldsupervisor->Full_Name,
+            'Email' => $request->Email ?? $oldsupervisor->Email,
+            'Phone' => $request->Phone ?? $oldsupervisor->Phone,
+            'Address' => $request->Address ?? $oldsupervisor->Address,
+            'location' => $request->location ?? $oldsupervisor->location,
         ]);
         $supervisor->save();
-        return response()->json(['message' => 'Supervisor updated successfully', 'supervisor' => $supervisor], 201);
+        return response()->json(['message' => 'Supervisor updated successfully', 'supervisor' => new SupervisorResource($supervisor)], 201);
     }
 
     //Delete Function

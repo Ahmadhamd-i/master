@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\StudentResource;
 use App\Models\Student;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -36,14 +38,13 @@ class StudentController extends Controller
     public function index()
     {
         $Students = Student::all();
-
-        return response()->json(['Students' => $Students], 200);
+        return ApiResponse::sendresponse(200, 'Students ', StudentResource::collection($Students));
     }
 
     //Update Student
     public function  update(Request $request, $id)
     {
-        // Find the supervisor
+        // Find the Student
         $student = Student::find($id);
 
         if (!$student) {
@@ -80,18 +81,16 @@ class StudentController extends Controller
             'Supervisor_ID' => $request->Supervisor_ID ?? $oldstudent->Supervisor_ID,
         ]);
         $student->save();
-        return response()->json(['message' => 'student updated successfully', 'student' => $student], 201);
+        return response()->json(['message' => 'student updated successfully', 'student' => new StudentResource($student)], 201);
     }
 
 
     public function getStudent($ID)
     {
-        $parent = Student::findOrFail($ID);
-        if ($parent) {
-            return response()->json([
-                'success' => true,
-                'Student' => $parent,
-            ]);
+        $Student = Student::findOrFail($ID);
+        if ($Student) {
+
+            return Apiresponse::sendresponse(200, "Student", new StudentResource($Student));
         } {
             return $this->apiresponse(null, 'Student Table Not Found', 404);
         }
@@ -99,13 +98,13 @@ class StudentController extends Controller
 
     public function destroy($id)
     {
-        $supervisor = Student::find($id);
+        $student = Student::find($id);
 
-        if (!$supervisor) {
+        if (!$student) {
             return response()->json(['message' => 'Student not found'], 404);
         }
 
-        $supervisor->destroy($id);
+        $student->destroy($id);
         return response()->json(['message' => 'Student deleted successfully'], 200);
     }
 }

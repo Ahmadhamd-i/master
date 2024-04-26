@@ -16,8 +16,7 @@ class SupervisorResource extends JsonResource
     {
         return [
             'ID' => $this->ID,
-            'Full_Name' => $this->Full_Name,
-            'Password' => $this->Password,
+            'Supervisor Name' => $this->Full_Name,
             'Image' => $this->Image,
             'Email' => $this->Email,
             'Phone' => $this->Phone,
