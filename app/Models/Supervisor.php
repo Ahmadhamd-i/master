@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\Supervisor as Authenticatable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Supervisor extends Authenticatable implements JWTSubject
+
+//Model
+class Supervisor extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -53,16 +54,18 @@ class Supervisor extends Authenticatable implements JWTSubject
         'remember_token',
     ];
 
-    public function getJWTIdentifier() {
+    /*  public function getJWTIdentifier()
+    {
         return $this->getKey();
-    }
+    } */
 
     /**
      * Return a key value array, containing any custom claims to be added to the JWT.
      *
-     * @return array
-     */
-    public function getJWTCustomClaims() {
+     */ // @return array
+    //*/
+    /*  public function getJWTCustomClaims()
+    {
         return [];
-    }
+    } */
 }

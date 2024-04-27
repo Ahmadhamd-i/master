@@ -46,6 +46,16 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+        'supervisor' => [
+            'driver' => 'sanctum',
+            'provider' => 'supervisor',
+            // 'hash' => false,
+        ],
+        'parent' => [
+            'driver' => 'sanctum',
+            'provider' => 'parent',
+            // 'hash' => false,
+        ],
     ],
 
     /*
@@ -64,18 +74,56 @@ return [
     | Supported: "database", "eloquent"
     |
     */
+    //Super viseor Guards  
 
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
+        'supervisor' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Supervisor::class,
+        ],
+        'parent' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Parents::class,
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
     ],
+
+    // Sanctum Guard 
+
+    /*  'guards' => [
+        'api' => [
+            'driver' => 'sanctum',
+            'provider' => 'supervisor', // Use the appropriate provider for supervisor
+        ],
+
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'supervisor', // Use the appropriate provider for supervisor
+        ],
+    ], */
+
+    /* 'providers' => [
+        'supervisor' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Supervisor::class,
+        ],
+    ], */
+
+
+
+
+
+
+
+
+    //
 
     /*
     |--------------------------------------------------------------------------
@@ -99,6 +147,12 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'supervisor' => [
+            'provider' => 'supervisor',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,
