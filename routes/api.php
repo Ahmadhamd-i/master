@@ -94,4 +94,5 @@ Route::group([
         Route::post('/Flogout', 'Flogout')->middleware('auth:sanctum');
         Route::post('/Parentlogin', 'ParentLogin');
     });
+    //apis
 }
