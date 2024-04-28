@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Parents;
 use App\Models\Supervisor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class Auth2Controller extends Controller
@@ -26,7 +27,7 @@ class Auth2Controller extends Controller
 
 
         if ($supervisor = Supervisor::where('email', $request->Email)->first()) {
-            if (($request->Password) == ($supervisor->Password)) {
+            if (Hash::check($request->Password, $supervisor->Password)) {
                 $supervisor = Supervisor::where('email', $request->Email)->first();
                 $data['token'] = $supervisor->createToken('SupervisorToken')->plainTextToken;
                 $data['Supervisor ID'] = $supervisor->ID;
@@ -55,17 +56,19 @@ class Auth2Controller extends Controller
         }
 
 
-        $parent = parents::where('Email', $request->Email)->first();
-        //[]
-        if (($request->Password) == ($parent->Password)) {
-            $parent = parents::where('email', $request->Email)->first();
-            $data['token'] = $parent->createToken('ParentToken')->plainTextToken;
-            $data['Parent ID'] = $parent->ID;
-            $data['Parent Name'] = $parent->Full_Name;
-            $data['Parent email'] = $parent->Email;
-            return ApiResponse::sendresponse(200, 'Logged In Successfully', $data);
+        if ($Parent = Parents::where('email', $request->Email)->first()) {
+            if (Hash::check($request->Password, $Parent->Password)) {
+                $Parent = Parents::where('email', $request->Email)->first();
+                $data['token'] = $Parent->createToken('ParentToken')->plainTextToken;
+                $data['Parent ID'] = $Parent->ID;
+                $data['Parent Name'] = $Parent->Full_Name;
+                $data['Parent email'] = $Parent->Email;
+                return ApiResponse::sendresponse(200, 'Logged In Successfully', $data);
+            } else {
+                return ApiResponse::sendresponse(422, 'Login Failed Check the email and password again', null);
+            }
         } else {
-            return ApiResponse::sendresponse(422, 'Login Failed Check the email and password again', null);
+            return ApiResponse::sendresponse(401, 'Enter a valid email', null);
         }
     }
 

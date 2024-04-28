@@ -85,16 +85,13 @@ Route::group([
     });
 }
 
-//SuperVisor Apis
+//Application Apis
 {
-    //LogIn And LogOut
-
-    /* Route::middleware('auth:sanctum')->post('/super', [Auth2Controller::class, 'SVlogin']); */
+    //LogIn And LogOut Supervisor Parent
 
     Route::controller(Auth2Controller::class)->group(function () {
         Route::post('/SVlogin', 'SVlogin');
         Route::post('/Flogout', 'Flogout')->middleware('auth:sanctum');
         Route::post('/Parentlogin', 'ParentLogin');
     });
-    Route::get('/SV/getall', [SupervisorController::class, 'index'])->middleware('auth:sanctum');
 }
