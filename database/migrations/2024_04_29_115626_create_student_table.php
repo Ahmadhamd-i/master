@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('student', function (Blueprint $table) {
             $table->id('ID');
             $table->string('FullName');
-            $table->binary('Image')->default('null');
+            $table->binary('Image')->default('NULL');
             $table->string('grade');
             $table->string('class');
         });

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('ID', true)->unique('id');
             $table->string('Full_Name')->unique('full_name');
             $table->string('Password');
-            $table->binary('Image')->default('null');
+            $table->binary('Image')->default('NULL');
             $table->string('Email')->unique('email');
             $table->integer('Phone');
             $table->string('Address');
