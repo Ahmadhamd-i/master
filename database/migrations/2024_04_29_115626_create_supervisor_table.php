@@ -12,18 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('supervisor', function (Blueprint $table) {
-            $table->integer('ID', false)->unique('id');
-            $table->string('Full_Name');
+            $table->id('ID', true)->unique('id');
+            $table->string('Full_Name')->unique('full_name');
             $table->string('Password');
-            $table->binary('Image')->default('NULL');
+            $table->binary('Image');
             $table->string('Email')->unique('email');
             $table->integer('Phone');
             $table->string('Address');
             $table->string('location');
-            $table->rememberToken();
-            $table->timestamps();
-
-            /* $table->primary(['ID']); */
         });
     }
 

@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('parent', function (Blueprint $table) {
-            $table->foreign(['Supervisor_ID'], 'parent_ibfk_1')->references(['ID'])->on('supervisor')->onUpdate('restrict')->onDelete('restrict');
+        Schema::create('driver', function (Blueprint $table) {
+            $table->id('ID');
+            $table->string('Full_Name')->unique('full_name');
+            $table->binary('Image');
+            $table->integer('Phone');
+            $table->string('Email');
         });
     }
 
@@ -21,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('parent', function (Blueprint $table) {
-            $table->dropForeign('parent_ibfk_1');
-        });
+        Schema::dropIfExists('driver');
     }
 };

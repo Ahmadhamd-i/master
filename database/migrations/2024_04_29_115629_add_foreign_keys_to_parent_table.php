@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('enrollment', function (Blueprint $table) {
-            $table->integer('student_ID');
-            $table->dateTime('enroll_time')->useCurrent();
-            $table->boolean('Enroll_Status')->nullable();
-            $table->integer('Bus_ID')->primary();
+        Schema::table('parent', function (Blueprint $table) {
+            $table->foreignId('Supervisor_ID')->constrained('supervisor');
         });
     }
 
@@ -24,6 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('enrollment');
+        Schema::table('parent', function (Blueprint $table) {
+        });
     }
 };

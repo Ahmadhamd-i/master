@@ -12,13 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('buses_info', function (Blueprint $table) {
-            $table->integer('Bus_ID', false);
-            $table->integer('Bus_Supervisor_ID')->unique('bus_supervisor');
-            $table->integer('Bus_Driver_ID')->index('bus_driver_id');
+            $table->id('ID', true);
             $table->string('Bus_Line_Name');
 
-            /* $table->primary(['Bus_ID', 'Bus_Supervisor_ID', 'Bus_Driver_ID']);
-         */
+            // $table->primary(['Bus_ID']);
         });
     }
 
