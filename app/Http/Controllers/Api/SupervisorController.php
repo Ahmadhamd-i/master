@@ -17,10 +17,10 @@ class SupervisorController extends Controller
     public function store(Request $request)
     {
         // Validate request data
+        $ran = mt_rand(60000, 59999);
         $validator = Validator::make(
             $request->all(),
             [
-                'ID' => 'required',
                 'Full_Name' => 'required',
                 'Email' => 'required|email',
                 'Phone' => 'numeric',
@@ -35,7 +35,7 @@ class SupervisorController extends Controller
         }
         Supervisor::create(array_merge(
             $validator->validated(),
-            ['Password' => bcrypt($request->Password)]
+            ['ID' => $ran, 'Password' => bcrypt($request->Password)]
         ));
         return response()->json([
             'message' => 'SuperVisor successfully Stored',
@@ -119,5 +119,4 @@ class SupervisorController extends Controller
         $supervisor->destroy($id);
         return response()->json(['message' => 'Supervisor deleted successfully'], 200);
     }
-
 }

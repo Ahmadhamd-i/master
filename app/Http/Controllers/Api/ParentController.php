@@ -33,11 +33,12 @@ class ParentController extends Controller
 
     public function store(Request $request)
     {
+        $ran = mt_rand(40000, 50000);
         // Validate request data
         $validator = Validator::make(
             $request->all(),
             [
-                'ID' => 'required',
+
                 'Full_Name' => 'required',
                 'Password' => 'required ',
                 'Child_Name' => 'required',
@@ -53,7 +54,7 @@ class ParentController extends Controller
         }
         Parents::create(array_merge(
             $validator->validated(),
-            ['Password' => bcrypt($request->Password)]
+            ['ID' => $ran, 'Password' => bcrypt($request->Password)]
         ));
         return response()->json([
             'message' => 'Parent successfully Stored',

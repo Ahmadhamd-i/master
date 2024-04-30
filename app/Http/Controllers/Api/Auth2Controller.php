@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class Auth2Controller extends Controller
 {
@@ -80,12 +81,9 @@ class Auth2Controller extends Controller
     }
 
 
-    public function refresh()
+    /* public function refresh(Request $request)
     {
-        return response()->json([
-            'access_token' => Auth::refresh(),
-            'token_type' => 'Bearer',
-            'expires_in' => Auth::factory()->getTTL() * 60,
-        ]);
-    }
+        $request->user()->currentAccessToken();
+        return $this->createNewToken(Auth()->guard('sanctum')->refresh());
+    } */
 }

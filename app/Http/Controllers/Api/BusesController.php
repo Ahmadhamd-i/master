@@ -14,11 +14,11 @@ class BusesController extends Controller
 
     public function store(Request $request)
     {
+        $ran = mt_rand(10000, 20000);
         // Validate request data
         $validator = Validator::make(
             $request->all(),
             [
-                'ID' => 'required',
                 'Bus_Supervisor_ID' => 'required',
                 'Bus_Driver_ID' => 'required',
                 'Bus_Line_Name' => 'required|string',
@@ -28,7 +28,7 @@ class BusesController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
-        BusInfo::create(array_merge($validator->validated()));
+        BusInfo::create(array_merge($validator->validated(), ['ID' => $ran]));
         return response()->json([
             'message' => 'Bus Info successfully Stored',
         ], 201);

@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('supervisor', function (Blueprint $table) {
             $table->id('ID', true)->unique('id');
-            $table->string('Full_Name')->unique('full_name');
+            $table->string('Full_Name');
             $table->string('Password');
             $table->binary('Image')->nullable()->default(NULL);
-            $table->string('Email')->unique('email');
+            $table->string('Email');
             $table->integer('Phone');
             $table->string('Address');
             $table->string('location');

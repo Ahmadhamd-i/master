@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('driver', function (Blueprint $table) {
             $table->id('ID');
-            $table->string('Full_Name')->unique('full_name');
+            $table->string('Full_Name');
             $table->binary('Image')->nullable()->default(NULL);
             $table->integer('Phone');
             $table->string('Email');

@@ -13,11 +13,12 @@ class StudentController extends Controller
 {
     public function store(Request $request)
     {
+        $ran = mt_rand(70000, 80000);
         // Validate request data
         $validator = Validator::make(
             $request->all(),
             [
-                'ID' => 'required',
+
                 'FullName' => 'required',
                 'Parent_ID' => 'required',
                 'grade' => 'required',
@@ -29,7 +30,7 @@ class StudentController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
-        Student::create(array_merge($validator->validated()));
+        Student::create(array_merge($validator->validated(), ['ID' => $ran]));
         return response()->json([
             'message' => 'Student successfully Stored',
         ], 201);

@@ -49,11 +49,13 @@ return [
         'supervisor' => [
             'driver' => 'sanctum',
             'provider' => 'supervisor',
+            'expire' => 1440,
             // 'hash' => false,
         ],
         'parent' => [
             'driver' => 'sanctum',
             'provider' => 'parent',
+            'expire' => 1440,
             // 'hash' => false,
         ],
     ],

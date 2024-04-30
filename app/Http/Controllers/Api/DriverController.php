@@ -13,11 +13,12 @@ class DriverController extends Controller
 {
     public function store(Request $request)
     {
+        $ran = mt_rand(20001, 30000);
         // Validate request data
         $validator = Validator::make(
             $request->all(),
             [
-                'ID' => 'required',
+
                 'Full_Name' => 'required',
                 'Phone' => 'required|numeric',
                 'Email' => 'email',
@@ -28,7 +29,7 @@ class DriverController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
-        Driver::create(array_merge($validator->validated()));
+        Driver::create(array_merge($validator->validated(), ['ID' => $ran]));
         return response()->json([
             'message' => 'Driver successfully Stored',
         ], 201);
