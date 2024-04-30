@@ -42,7 +42,7 @@ class BusesController extends Controller
     }
     public function getBusInfo($ID)
     {
-        $buses = BusInfo::findOrFail($ID);
+        $buses = BusInfo::where('ID', $ID)->get();
         if ($buses) {
             return ApiResponse::sendresponse(200, "Bus", $buses);
             /*  return response()->json([
@@ -57,7 +57,7 @@ class BusesController extends Controller
     public function  update(Request $request, $id)
     {
         // Find the Student
-        $Businfo = BusInfo::find($id);
+        $Businfo = BusInfo::where('ID', $id)->get();
 
         if (!$Businfo) {
             return response()->json(['message' => 'Bus not found'], 404);
@@ -78,7 +78,7 @@ class BusesController extends Controller
             return response()->json(['message' => 'Validation failed', 'errors' => $validator->errors()], 400);
         }
 
-        $oldBusInfo = BusInfo::find($id);
+        $oldBusInfo = BusInfo::where('ID', $id)->get();
         if (!$oldBusInfo) {
             return response()->json(['message' => 'Bus not found'], 404);
         }
@@ -95,7 +95,7 @@ class BusesController extends Controller
     }
     public function destroy($id)
     {
-        $BusInfo = BusInfo::find($id);
+        $BusInfo = BusInfo::where('ID', $id)->get();
 
         if (!$BusInfo) {
             return response()->json(['message' => 'BusInfo not found'], 404);

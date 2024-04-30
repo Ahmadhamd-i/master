@@ -95,6 +95,7 @@ Route::group([
         Route::post('/SVlogin', 'SVlogin');
         Route::post('/Flogout', 'Flogout')->middleware('auth:sanctum');
         Route::post('/Parentlogin', 'ParentLogin');
+        Route::post('/refresh', 'refresh');
     });
     //apis SV App
     {

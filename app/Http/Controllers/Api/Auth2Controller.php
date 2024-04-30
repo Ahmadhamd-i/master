@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Parents;
 use App\Models\Supervisor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -76,5 +77,15 @@ class Auth2Controller extends Controller
     {
         $request->user()->currentAccessToken()->delete();
         return ApiResponse::sendresponse(200, 'Logged Out Successfully');
+    }
+
+
+    public function refresh()
+    {
+        return response()->json([
+            'access_token' => Auth::refresh(),
+            'token_type' => 'Bearer',
+            'expires_in' => Auth::factory()->getTTL() * 60,
+        ]);
     }
 }
