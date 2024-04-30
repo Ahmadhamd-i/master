@@ -9,7 +9,7 @@ class BusInfo extends Model
 {
     use HasFactory;
     protected $table = 'buses_info';
-    protected $primaryKey = 'Bus_ID';
+    protected $primaryKey = 'ID';
     public $timestamps = false;
 
     protected $fillable = [
