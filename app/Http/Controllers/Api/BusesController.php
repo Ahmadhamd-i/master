@@ -18,7 +18,7 @@ class BusesController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'Bus_ID' => 'required',
+                'ID' => 'required',
                 'Bus_Supervisor_ID' => 'required',
                 'Bus_Driver_ID' => 'required',
                 'Bus_Line_Name' => 'required|string',
@@ -65,9 +65,9 @@ class BusesController extends Controller
 
         // Validate request data
         $validator = Validator::make(
-            $request->only(['Bus_ID', 'Bus_Supervisor_ID', 'Bus_Driver_ID', 'Bus_Line_Name']),
+            $request->only(['ID', 'Bus_Supervisor_ID', 'Bus_Driver_ID', 'Bus_Line_Name']),
             [
-                'Bus_ID' => 'sometimes',
+                'ID' => 'sometimes',
                 'Bus_Supervisor_ID' => 'sometimes',
                 'Bus_Driver_ID' => 'sometimes',
                 'Bus_Line_Name' => 'sometimes|string',
@@ -84,7 +84,7 @@ class BusesController extends Controller
         }
 
         $Businfo->update([
-            'Bus_ID' => $request->Bus_ID ?? $oldBusInfo->Bus_ID,
+            'ID' => $request->ID ?? $oldBusInfo->ID,
             'Bus_Supervisor_ID' => $request->Bus_Supervisor_ID ?? $oldBusInfo->Bus_Supervisor_ID,
             'Bus_Driver_ID' => $request->Bus_Driver_ID ?? $oldBusInfo->Bus_Driver_ID,
             'Bus_Line_Name' => $request->Bus_Line_Name ?? $oldBusInfo->Bus_Line_Name,
