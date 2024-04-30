@@ -5,9 +5,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BusesController;
 use App\Http\Controllers\Api\DriverController;
+use App\Http\Controllers\Api\ParentAppController;
 use App\Http\Controllers\Api\ParentController;
 use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\SupervisorController;
+use App\Http\Controllers\Api\SVappController;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,5 +96,11 @@ Route::group([
         Route::post('/Flogout', 'Flogout')->middleware('auth:sanctum');
         Route::post('/Parentlogin', 'ParentLogin');
     });
-    //apis
+    //apis SV App
+    {
+        Route::group(['middleware' => 'auth:sanctum'], function () {
+            Route::post('/getSVstudents', [SVappController::class, 'getrelatedStudents']);
+            Route::post('/getParentChild', [ParentAppController::class, 'getParentChild']);
+        });
+    }
 }

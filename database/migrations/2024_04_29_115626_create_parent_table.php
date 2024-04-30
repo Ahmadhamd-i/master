@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('parent', function (Blueprint $table) {
             $table->id('ID', true);
             $table->string('Full_Name')->unique('username');
-            $table->integer('Password');
+            $table->string('Password');
             $table->string('Child_Name')->index('child_name');
             $table->string('Email')->unique('email');
             $table->integer('Phone')->unique('phone');
