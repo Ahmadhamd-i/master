@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ParentResource;
 use Illuminate\Support\Facades\Validator;
-use App\Helpers\Apiresponse;
+use App\Helpers\ApiResponse;
 use App\Helpers\ApiResponse as HelpersApiResponse;
 
 class ParentController extends Controller
@@ -18,17 +18,16 @@ class ParentController extends Controller
     {
 
         $parents = Parents::all();
-        return Apiresponse::sendresponse(200, "parents", ParentResource::collection($parents));
+        return ApiResponse::sendresponse(200, "parents", ParentResource::collection($parents));
     }
 
     public function getParent($ID)
     {
         $parent = Parents::findOrFail($ID);
         if ($parent) {
-
-            return Apiresponse::sendresponse(200, "parent", new ParentResource($parent));
+            return ApiResponse::sendresponse(200, "parent", new ParentResource($parent));
         } {
-            return $this->apiresponse(null, 'Parent Table Not Found', 404);
+            return $this->ApiResponse(null, 'Parent Table Not Found', 404);
         }
     }
 
