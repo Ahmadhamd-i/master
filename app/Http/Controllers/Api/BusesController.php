@@ -54,23 +54,24 @@ class BusesController extends Controller
         }
     }
 
-    public function  update(Request $request, $id)
+    public function  update(Request $request, $ID)
     {
-        // Find the Student
-        $Businfo = BusInfo::where('ID', $id)->get();
+        // Find the supervisor
+        $bus = BusInfo::find($ID);
 
-        if (!$Businfo) {
+        if (!$bus) {
             return response()->json(['message' => 'Bus not found'], 404);
         }
 
         // Validate request data
         $validator = Validator::make(
-            $request->only(['ID', 'Bus_Supervisor_ID', 'Bus_Driver_ID', 'Bus_Line_Name']),
+            $request->only(['ID', 'Bus_Supervisor_ID', 'Bus_Driver_ID', 'Bus_Line_Name',]),
             [
                 'ID' => 'sometimes',
-                'Bus_Supervisor_ID' => 'sometimes',
-                'Bus_Driver_ID' => 'sometimes',
-                'Bus_Line_Name' => 'sometimes|string',
+                'Bus_Line_Name' => 'string|sometimes',
+                'Bus_Supervisor_ID' => 'numeric|sometimes',
+                'Bus_Driver_ID' => 'numeric|sometimes',
+
             ]
         );
 
@@ -78,21 +79,22 @@ class BusesController extends Controller
             return response()->json(['message' => 'Validation failed', 'errors' => $validator->errors()], 400);
         }
 
-        $oldBusInfo = BusInfo::where('ID', $id)->get();
-        if (!$oldBusInfo) {
+        $oldBusinfo = BusInfo::find($ID);
+        if (!$oldBusinfo) {
             return response()->json(['message' => 'Bus not found'], 404);
         }
 
-        $Businfo->update([
-            'ID' => $request->ID ?? $oldBusInfo->ID,
-            'Bus_Supervisor_ID' => $request->Bus_Supervisor_ID ?? $oldBusInfo->Bus_Supervisor_ID,
-            'Bus_Driver_ID' => $request->Bus_Driver_ID ?? $oldBusInfo->Bus_Driver_ID,
-            'Bus_Line_Name' => $request->Bus_Line_Name ?? $oldBusInfo->Bus_Line_Name,
-
+        $bus->update([
+            'ID' => $request->ID ?? $oldBusinfo->ID,
+            'Bus_Line_Name' => $request->Bus_Line_Name ?? $oldBusinfo->Bus_Line_Name,
+            'Bus_Driver_ID' => $request->Bus_Driver_ID ?? $oldBusinfo->Bus_Driver_ID,
+            'Bus_Supervisor_ID' => $request->Bus_Supervisor_ID ?? $oldBusinfo->Bus_Supervisor_ID,
         ]);
-        $Businfo->save();
-        return response()->json(['message' => 'Bus Info updated successfully', 'Businfo' => new BusesInfoResource($Businfo)], 201);
+        $bus->save();
+        return response()->json(['message' => 'Bus updated successfully', 'Bus' => new BusesInfoResource($bus)], 201);
     }
+
+
     public function destroy($id)
     {
         $BusInfo = BusInfo::where('ID', $id)->get();
