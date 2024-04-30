@@ -99,12 +99,13 @@ Route::group([
     });
     //apis SV App
     {
-        /*  Route::group(['middleware' => 'auth:sanctum'], function () {
+        Route::group(['middleware' => 'auth:sanctum'], function () {
             Route::post('/getSVstudents', [SVappController::class, 'getrelatedStudents']);
             Route::post('/getParentChild', [ParentAppController::class, 'getParentChild']);
-        }); */
-        Route::post('/getSVstudents', [SVappController::class, 'getrelatedStudents']);
+            Route::get('/getstudent/{id}', [StudentController::class, 'getStudent']);
+        });
+        /*   Route::post('/getSVstudents', [SVappController::class, 'getrelatedStudents']);
         Route::post('/getParentChild', [ParentAppController::class, 'getParentChild']);
-        Route::get('/getstudent/{id}', [StudentController::class, 'getStudent']);
+        Route::get('/getstudent/{id}', [StudentController::class, 'getStudent']); */
     }
 }
