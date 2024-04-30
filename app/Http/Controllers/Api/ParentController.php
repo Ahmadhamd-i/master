@@ -18,7 +18,7 @@ class ParentController extends Controller
     {
 
         $parents = Parents::all();
-        return Apiresponse::sendresponse(200, "parents", $parents);
+        return Apiresponse::sendresponse(200, "parents", ParentResource::collection($parents));
     }
 
     public function getParent($ID)
