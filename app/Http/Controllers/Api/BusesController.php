@@ -97,13 +97,13 @@ class BusesController extends Controller
 
     public function destroy($id)
     {
-        $BusInfo = BusInfo::where('ID', $id)->get();
+        $Bus = BusInfo::find($id);
 
-        if (!$BusInfo) {
-            return response()->json(['message' => 'BusInfo not found'], 404);
+        if (!$Bus) {
+            return response()->json(['message' => 'Bus not found'], 404);
         }
 
-        $BusInfo->destroy($id);
-        return response()->json(['message' => 'BusInfo deleted successfully'], 200);
+        $Bus->destroy($id);
+        return response()->json(['message' => 'Bus deleted successfully'], 200);
     }
 }
