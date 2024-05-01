@@ -17,7 +17,7 @@ class SupervisorController extends Controller
     public function store(Request $request)
     {
         // Validate request data
-        $ran = mt_rand(60000, 59999);
+        $ran = mt_rand(60000, 69999);
         $validator = Validator::make(
             $request->all(),
             [
