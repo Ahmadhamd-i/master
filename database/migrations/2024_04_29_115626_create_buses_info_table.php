@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('buses_info', function (Blueprint $table) {
             $table->id('ID', true);
             $table->string('Bus_Line_Name');
+            $table->string('Bus_License');
 
             // $table->primary(['Bus_ID']);
         });

@@ -21,20 +21,13 @@ extends Authenticatable
         'ID',
         'Full_Name',
         'Password',
-        'Child_Name',
         'Email',
         'Phone',
         'address',
-        'Supervisor_ID'
     ];
 
     public function children()
     {
         return $this->hasMany(Student::class, 'Parent_ID', 'ID');
-    }
-
-    public function supervisor()
-    {
-        return $this->belongsTo(Supervisor::class, 'Supervisor_ID', 'ID');
     }
 }

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id('ID', true);
             $table->string('Full_Name');
             $table->string('Password');
-            $table->string('Child_Name')->index('child_name');
             $table->string('Email');
             $table->integer('Phone');
             $table->string('address');

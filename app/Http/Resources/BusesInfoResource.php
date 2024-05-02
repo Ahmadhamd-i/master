@@ -19,6 +19,7 @@ class BusesInfoResource extends JsonResource
             'Bus_Supervisor_ID' => $this->Bus_Supervisor_ID,
             'Bus_Driver_ID' => $this->Bus_Driver_ID,
             'Bus-Line' => $this->Bus_Line_Name,
+            'Bus_License' => $this->Bus_License,
 
         ];
     }

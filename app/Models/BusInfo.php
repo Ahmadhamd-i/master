@@ -17,6 +17,7 @@ class BusInfo extends Model
         'Bus_Supervisor_ID',
         'Bus_Driver_ID',
         'Bus_Line_Name',
+        'Bus_License',
     ];
 
     public function supervisor()

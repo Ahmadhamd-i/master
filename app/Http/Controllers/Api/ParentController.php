@@ -41,11 +41,9 @@ class ParentController extends Controller
 
                 'Full_Name' => 'required',
                 'Password' => 'required ',
-                'Child_Name' => 'required',
                 'Email' => 'required|email',
                 'Phone' => 'required',
                 'address' => 'required',
-                'Supervisor_ID' => 'required',
             ]
         );
 
@@ -64,13 +62,11 @@ class ParentController extends Controller
     public function update(Request $request, $id)
 
     {
-        $validator = Validator::make($request->only(['Full_Name', 'Email', 'address', 'Phone', 'Child_Name',]), [
+        $validator = Validator::make($request->only(['Full_Name', 'Email', 'address', 'Phone',]), [
             'Full_Name' => 'sometimes',
             'Email' => 'sometimes|email',
             'address' => 'sometimes',
             'Phone' => 'sometimes',
-            'Child_Name' => 'string',
-
         ]);
 
         $Parent = Parents::find($id);
@@ -87,7 +83,6 @@ class ParentController extends Controller
             'Email' => $request->Email ?? $oldparent->Email,
             'Phone' => $request->Phone ?? $oldparent->Phone,
             'Address' => $request->address ?? $oldparent->Address,
-            'Child_Name' => $request->Child_Name ?? $oldparent->Child_Name,
         ]);
 
 

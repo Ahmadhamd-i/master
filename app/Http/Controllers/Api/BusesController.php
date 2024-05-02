@@ -22,6 +22,7 @@ class BusesController extends Controller
                 'Bus_Supervisor_ID' => 'required',
                 'Bus_Driver_ID' => 'required',
                 'Bus_Line_Name' => 'required|string',
+                'Bus_License' => 'required|string',
             ]
         );
 
@@ -71,6 +72,7 @@ class BusesController extends Controller
                 'Bus_Line_Name' => 'string|sometimes',
                 'Bus_Supervisor_ID' => 'numeric|sometimes',
                 'Bus_Driver_ID' => 'numeric|sometimes',
+                'Bus_License' => 'sometimes|string'
 
             ]
         );
@@ -89,6 +91,7 @@ class BusesController extends Controller
             'Bus_Line_Name' => $request->Bus_Line_Name ?? $oldBusinfo->Bus_Line_Name,
             'Bus_Driver_ID' => $request->Bus_Driver_ID ?? $oldBusinfo->Bus_Driver_ID,
             'Bus_Supervisor_ID' => $request->Bus_Supervisor_ID ?? $oldBusinfo->Bus_Supervisor_ID,
+            'Bus_License' => $request->Bus_License ?? $oldBusinfo->Bus_License,
         ]);
         $bus->save();
         return response()->json(['message' => 'Bus updated successfully', 'Bus' => new BusesInfoResource($bus)], 201);
