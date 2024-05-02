@@ -29,10 +29,8 @@ class DriverController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
-        Driver::create(array_merge($validator->validated(), ['ID' => $ran]));
-        return response()->json([
-            'message' => 'Driver successfully Stored',
-        ], 201);
+        $driverinfo = Driver::create(array_merge($validator->validated(), ['ID' => $ran]));
+        return ApiResponse::sendresponse(201, 'Driver stored Successfully ', new DriverResource($driverinfo));
     }
 
     public function index()

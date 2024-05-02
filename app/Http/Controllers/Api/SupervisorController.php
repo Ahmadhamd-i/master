@@ -33,13 +33,11 @@ class SupervisorController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
-        Supervisor::create(array_merge(
+        $supervisorinfo = Supervisor::create(array_merge(
             $validator->validated(),
             ['ID' => $ran, 'Password' => bcrypt($request->Password)]
         ));
-        return response()->json([
-            'message' => 'SuperVisor successfully Stored',
-        ], 201);
+        return ApiResponse::sendresponse(201, 'Supervisor stored Successfully ', new SupervisorResource($supervisorinfo));
     }
 
     public function index()

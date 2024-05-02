@@ -50,13 +50,11 @@ class ParentController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
-        Parents::create(array_merge(
+        $parent = Parents::create(array_merge(
             $validator->validated(),
             ['ID' => $ran, 'Password' => bcrypt($request->Password)]
         ));
-        return response()->json([
-            'message' => 'Parent successfully Stored',
-        ], 201);
+        return ApiResponse::sendresponse(201, 'Parent stored Successfully ', new ParentResource($parent));
     }
     //Update Function
     public function update(Request $request, $id)

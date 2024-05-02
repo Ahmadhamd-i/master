@@ -29,10 +29,8 @@ class BusesController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
-        BusInfo::create(array_merge($validator->validated(), ['ID' => $ran]));
-        return response()->json([
-            'message' => 'Bus Info successfully Stored',
-        ], 201);
+        $Businfo = BusInfo::create(array_merge($validator->validated(), ['ID' => $ran]));
+        return ApiResponse::sendresponse(201, 'BusInfo stored Successfully ', new BusesInfoResource($Businfo));
     }
 
     public function index()

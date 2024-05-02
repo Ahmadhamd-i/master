@@ -30,10 +30,8 @@ class StudentController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
-        Student::create(array_merge($validator->validated(), ['ID' => $ran]));
-        return response()->json([
-            'message' => 'Student successfully Stored',
-        ], 201);
+        $student = Student::create(array_merge($validator->validated(), ['ID' => $ran]));
+        return ApiResponse::sendresponse(201, 'Student stored Successfully ', new StudentResource($student));
     }
 
     public function index()
