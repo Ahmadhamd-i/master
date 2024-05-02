@@ -102,13 +102,12 @@ Route::group([
         Route::group(['middleware' => 'auth:sanctum'], function () {
             Route::post('/getSVstudents', [SVappController::class, 'getrelatedStudents']); //SV
             Route::post('/getParentChild', [ParentAppController::class, 'getParentChild']); //Parent
-            Route::get('/getstudent/{id}', [StudentController::class, 'getStudent']); //SV
-            // Route::post('/updateLocation', [SVappController::class, 'Sharelocation']); //SV
+            Route::get('/getstudent/{id}', [StudentController::class, 'getStudent']); //SV        
+            Route::post('/updateLocation/{id}', [SVappController::class, 'Sharelocation']); //SV
+            Route::get('/getStLoctaion/{id}', [ParentAppController::class, 'getStudentLoctaion']); //parent
         });
         /*   Route::post('/getSVstudents', [SVappController::class, 'getrelatedStudents']);
         Route::post('/getParentChild', [ParentAppController::class, 'getParentChild']);
         Route::get('/getstudent/{id}', [StudentController::class, 'getStudent']); */
-        Route::post('/updateLocation/{id}', [SVappController::class, 'Sharelocation']);
-        Route::get('/getStLoctaion/{id}', [ParentAppController::class, 'getStudentLoctaion']);
     }
 }
