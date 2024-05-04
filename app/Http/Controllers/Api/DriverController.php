@@ -22,12 +22,15 @@ class DriverController extends Controller
                 'Full_Name' => 'required',
                 'Phone' => 'required|numeric',
                 'Email' => 'email',
-                'Image' => 'required|mimes:png,jpg,jpeg'
+                'Image' => 'required|image|mimes:jpeg,png,jpg|max:1024'
             ]
         );
         // Read the image file
+
+        // Get the uploaded file
+        $imageFile = $request->file('Image');
         if ($request->hasFile('Image')) {
-            $imageData = $request->file('Image');
+            $imageData = file_get_contents($imageFile->getRealPath());
         } else {
             return response()->json(['error' => 'No file uploaded'], 400);
         }

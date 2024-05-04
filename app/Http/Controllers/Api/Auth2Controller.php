@@ -31,7 +31,13 @@ class Auth2Controller extends Controller
         if ($supervisor = Supervisor::where('email', $request->Email)->first()) {
             if (Hash::check($request->Password, $supervisor->Password)) {
                 $supervisor = Supervisor::where('email', $request->Email)->first();
-                $data['token'] = $supervisor->createToken('SupervisorToken')->plainTextToken;
+                //remove the old token 
+                $existingToken = $supervisor->tokens()->where('name', 'SV' . $supervisor->Full_Name)->first();
+                if ($existingToken) {
+                    $existingToken->delete();
+                }
+                //create new Token
+                $data['token'] = $supervisor->createToken('SV' . $supervisor->Full_Name)->plainTextToken;
                 $data['Supervisor ID'] = $supervisor->ID;
                 $data['Supervisor Name'] = $supervisor->Full_Name;
                 $data['Supervisor email'] = $supervisor->Email;
@@ -61,8 +67,14 @@ class Auth2Controller extends Controller
 
         if ($Parent = Parents::where('email', $request->Email)->first()) {
             if (Hash::check($request->Password, $Parent->Password)) {
+                //Remove Old Token
                 $Parent = Parents::where('email', $request->Email)->first();
-                $data['token'] = $Parent->createToken('ParentToken')->plainTextToken;
+                $existingToken = $Parent->tokens()->where('name', 'Parent' . $Parent->Full_Name)->first();
+                if ($existingToken) {
+                    $existingToken->delete();
+                }
+
+                $data['token'] = $Parent->createToken('Parent' . $Parent->Full_Name)->plainTextToken;
                 $data['Parent ID'] = $Parent->ID;
                 $data['Parent Name'] = $Parent->Full_Name;
                 $data['Parent email'] = $Parent->Email;
