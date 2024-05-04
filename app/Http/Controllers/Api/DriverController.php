@@ -22,14 +22,21 @@ class DriverController extends Controller
                 'Full_Name' => 'required',
                 'Phone' => 'required|numeric',
                 'Email' => 'email',
-
+                'Image' => 'required|mimes:png,jpg,jpeg'
             ]
         );
+        // Read the image file
+        if ($request->hasFile('Image')) {
+            $imageData = $request->file('Image');
+        } else {
+            return response()->json(['error' => 'No file uploaded'], 400);
+        }
+
 
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
-        $driverinfo = Driver::create(array_merge($validator->validated(), ['ID' => $ran]));
+        $driverinfo = Driver::create(array_merge($validator->validated(), ['ID' => $ran, 'Image' => $imageData]));
         return ApiResponse::sendresponse(201, 'Driver stored Successfully ', new DriverResource($driverinfo));
     }
 
@@ -55,10 +62,10 @@ class DriverController extends Controller
     }
     public function  update(Request $request, $id)
     {
-        // Find the supervisor
-        $supervisor = Driver::find($id);
+        // Find the driver
+        $driver = Driver::find($id);
 
-        if (!$supervisor) {
+        if (!$driver) {
             return response()->json(['message' => 'Driver not found'], 404);
         }
 
@@ -82,15 +89,15 @@ class DriverController extends Controller
             return response()->json(['message' => 'Driver not found'], 404);
         }
 
-        $supervisor->update([
+        $driver->update([
             'ID' => $request->ID ?? $olddriver->ID,
             'Full_Name' => $request->Full_Name ?? $olddriver->Full_Name,
             'Email' => $request->Email ?? $olddriver->Email,
             'Phone' => $request->Phone ?? $olddriver->Phone,
 
         ]);
-        $supervisor->save();
-        return response()->json(['message' => 'Driver updated successfully', 'Driver' => new DriverResource($supervisor)], 201);
+        $driver->save();
+        return response()->json(['message' => 'Driver updated successfully', 'Driver' => new DriverResource($driver)], 201);
     }
 
     public function destroy($id)

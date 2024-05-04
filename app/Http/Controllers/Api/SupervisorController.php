@@ -26,16 +26,22 @@ class SupervisorController extends Controller
                 'Phone' => 'numeric',
                 'Password' => 'required ',
                 'Address' => 'string',
-                'location' => 'string'
+                'location' => 'string',
+                'Image' => 'required|mimes:png,jpg,jpeg'
             ]
         );
 
+        if ($request->hasFile('Image')) {
+            $imageData = $request->file('Image');
+        } else {
+            return response()->json(['error' => 'No file uploaded'], 400);
+        }
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
         $supervisorinfo = Supervisor::create(array_merge(
             $validator->validated(),
-            ['ID' => $ran, 'Password' => bcrypt($request->Password)]
+            ['ID' => $ran, 'Password' => bcrypt($request->Password), 'Image' => $imageData]
         ));
         return ApiResponse::sendresponse(201, 'Supervisor stored Successfully ', new SupervisorResource($supervisorinfo));
     }

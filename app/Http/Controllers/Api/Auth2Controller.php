@@ -35,6 +35,7 @@ class Auth2Controller extends Controller
                 $data['Supervisor ID'] = $supervisor->ID;
                 $data['Supervisor Name'] = $supervisor->Full_Name;
                 $data['Supervisor email'] = $supervisor->Email;
+                $data['Supervisor Image'] = base64_encode($supervisor->Image);
                 return ApiResponse::sendresponse(200, 'Logged In Successfully', $data);
             } else {
                 return ApiResponse::sendresponse(422, 'Login Failed Check the email and password again', null);

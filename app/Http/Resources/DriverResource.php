@@ -16,9 +16,10 @@ class DriverResource extends JsonResource
     {
         return [
             'ID' => $this->ID,
-            'Driver\'s Name' => $this->Full_Name,
+            'Driver Name' => $this->Full_Name,
             'Phone' => $this->Phone,
             'Email' => $this->Email,
+            'Driver Image' => base64_encode($this->Image),
         ];
     }
 }

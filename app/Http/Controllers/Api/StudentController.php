@@ -24,13 +24,20 @@ class StudentController extends Controller
                 'grade' => 'required',
                 'class' => 'required',
                 'Supervisor_ID' => 'required',
+                'Image' => 'required|mimes:png,jpg,jpeg',
             ]
         );
+
+        if ($request->hasFile('Image')) {
+            $imageData = $request->file('Image');
+        } else {
+            return response()->json(['error' => 'No file uploaded'], 400);
+        }
 
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
-        $student = Student::create(array_merge($validator->validated(), ['ID' => $ran]));
+        $student = Student::create(array_merge($validator->validated(), ['ID' => $ran, 'Image' => $imageData]));
         return ApiResponse::sendresponse(201, 'Student stored Successfully ', new StudentResource($student));
     }
 

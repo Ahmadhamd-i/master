@@ -17,9 +17,9 @@ class StudentResource extends JsonResource
         return [
             'ID' => $this->ID,
             'Student_Name' => $this->FullName,
-            'Image' => $this->Image,
             'grade' => $this->grade,
             'class' => $this->class,
+            'Student Image' => $this->Image, //base64_encode($this->Image),
         ];
     }
 }
