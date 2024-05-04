@@ -24,6 +24,7 @@ extends Authenticatable
         'Email',
         'Phone',
         'address',
+        'Image',
     ];
 
     public function children()

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('Email');
             $table->integer('Phone');
             $table->string('address');
+            $table->binary('Image')->nullable()->default(NULL);
         });
     }
 

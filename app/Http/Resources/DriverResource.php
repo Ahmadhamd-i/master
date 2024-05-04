@@ -19,7 +19,7 @@ class DriverResource extends JsonResource
             'Driver Name' => $this->Full_Name,
             'Phone' => $this->Phone,
             'Email' => $this->Email,
-            'Driver Image' => base64_encode($this->Image),
+            'Driver Image' => $this->Image, //base64_encode($this->Image),
         ];
     }
 }

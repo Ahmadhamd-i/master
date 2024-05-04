@@ -44,15 +44,22 @@ class ParentController extends Controller
                 'Email' => 'required|email',
                 'Phone' => 'required',
                 'address' => 'required',
+                'Image' => 'required|mimes:png,jpg,jpeg',
             ]
         );
+
+        if ($request->hasFile('Image')) {
+            $imageData = $request->file('Image');
+        } else {
+            return response()->json(['error' => 'No file uploaded'], 400);
+        }
 
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
         $parent = Parents::create(array_merge(
             $validator->validated(),
-            ['ID' => $ran, 'Password' => bcrypt($request->Password)]
+            ['ID' => $ran, 'Password' => bcrypt($request->Password), 'Image' => $imageData]
         ));
         return ApiResponse::sendresponse(201, 'Parent stored Successfully ', new ParentResource($parent));
     }
