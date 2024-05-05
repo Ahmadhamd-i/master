@@ -38,12 +38,9 @@ class DriverController extends Controller
             $imageFile = $request->file('Image');
             $imageName = $imageFile->getClientOriginalName();
 
-            //$imageFile->storeAs('public/storage', $imageName);
+            $imageFile->storeAs('public', $imageName);
 
-            // If you want to store it without the 'public' directory prefix in the path, you can use:
-            $imageFile->storeAs('storage', $imageName, 'storage');
-
-            // You may also need to generate a URL for accessing the stored image
+            // Generate the URL for accessing the stored image
             $imageUrl = asset('storage/' . $imageName);
         } else {
             return response()->json(['error' => 'No file uploaded'], 400);
