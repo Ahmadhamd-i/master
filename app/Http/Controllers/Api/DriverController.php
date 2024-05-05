@@ -29,9 +29,13 @@ class DriverController extends Controller
         // Read the image file
 
         // Get the uploaded file
-        $imageFile = $request->file('Image')->store('Image');
-        $imageUrl = Storage::url($imageFile);
-        if (!$imageFile) {
+        //$imageFile = $request->file('Image')->save(storage_path(path:'Images/'.$request->Image->hash_Name()));
+
+        if ($request->hasFile('Image')) {
+            $imageFile = $request->file('Image');
+            $imagePath = 'Images/' . $imageFile->getClientOriginalName();
+            $imageFile->storeAs('public', $imagePath);
+        } else {
             return response()->json(['error' => 'No file uploaded'], 400);
         }
 
@@ -39,7 +43,7 @@ class DriverController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
-        $driverinfo = Driver::create(array_merge($validator->validated(), ['ID' => $ran, 'Image' => $imageUrl]));
+        $driverinfo = Driver::create(array_merge($validator->validated(), ['ID' => $ran, 'Image' => $imageFile]));
         return ApiResponse::sendresponse(201, 'Driver stored Successfully ', new DriverResource($driverinfo));
     }
 
