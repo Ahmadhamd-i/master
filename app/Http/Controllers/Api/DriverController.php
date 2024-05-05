@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\DriverResource;
 use App\Models\Driver;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class DriverController extends Controller
@@ -29,6 +30,7 @@ class DriverController extends Controller
 
         // Get the uploaded file
         $imageFile = $request->file('Image')->store('Image');
+        $imageUrl = Storage::url($imageFile);
         if (!$imageFile) {
             return response()->json(['error' => 'No file uploaded'], 400);
         }
@@ -37,7 +39,7 @@ class DriverController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
-        $driverinfo = Driver::create(array_merge($validator->validated(), ['ID' => $ran, 'Image' => $imageFile]));
+        $driverinfo = Driver::create(array_merge($validator->validated(), ['ID' => $ran, 'Image' => $imageUrl]));
         return ApiResponse::sendresponse(201, 'Driver stored Successfully ', new DriverResource($driverinfo));
     }
 
