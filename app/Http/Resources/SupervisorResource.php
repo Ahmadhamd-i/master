@@ -17,7 +17,7 @@ class SupervisorResource extends JsonResource
         return [
             'ID' => $this->ID,
             'Supervisor Name' => $this->Full_Name,
-            'Supervisor Image' => base64_encode($this->Image),
+            'Supervisor Image' => $this->Image, // base64_encode($this->Image),
             'Email' => $this->Email,
             'Phone' => $this->Phone,
             'Address' => $this->Address,

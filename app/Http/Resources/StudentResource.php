@@ -19,7 +19,7 @@ class StudentResource extends JsonResource
             'Student_Name' => $this->FullName,
             'grade' => $this->grade,
             'class' => $this->class,
-            'Student Image' => base64_encode($this->Image),
+            'Student Image' => $this->Image, // base64_encode($this->Image),
         ];
     }
 }

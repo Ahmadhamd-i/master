@@ -21,7 +21,7 @@ class ParentResource extends JsonResource
             'Email' => $this->Email,
             'Phone' => $this->Phone,
             'address' => $this->address,
-            'Image' => base64_encode($this->Image),
+            'Image' => $this->Image, // base64_encode($this->Image),
         ];
     }
 }
