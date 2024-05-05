@@ -32,7 +32,11 @@ class SupervisorController extends Controller
         );
 
         if ($request->hasFile('Image')) {
-            $imageData = $request->file('Image');
+            $imageFile = $request->file('Image');
+            $imageName = $imageFile->getClientOriginalName();
+
+            $imageFile->storeAs('public', $imageName);
+            $imageUrl = asset('storage/' . $imageName);
         } else {
             return response()->json(['error' => 'No file uploaded'], 400);
         }
@@ -41,7 +45,7 @@ class SupervisorController extends Controller
         }
         $supervisorinfo = Supervisor::create(array_merge(
             $validator->validated(),
-            ['ID' => $ran, 'Password' => bcrypt($request->Password), 'Image' => $imageData]
+            ['ID' => $ran, 'Password' => bcrypt($request->Password), 'Image' => $imageUrl]
         ));
         return ApiResponse::sendresponse(201, 'Supervisor stored Successfully ', new SupervisorResource($supervisorinfo));
     }

@@ -29,7 +29,11 @@ class StudentController extends Controller
         );
 
         if ($request->hasFile('Image')) {
-            $imageData = $request->file('Image');
+            $imageFile = $request->file('Image');
+            $imageName = $imageFile->getClientOriginalName();
+
+            $imageFile->storeAs('public', $imageName);
+            $imageUrl = asset('storage/' . $imageName);
         } else {
             return response()->json(['error' => 'No file uploaded'], 400);
         }
@@ -37,7 +41,7 @@ class StudentController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
-        $student = Student::create(array_merge($validator->validated(), ['ID' => $ran, 'Image' => $imageData]));
+        $student = Student::create(array_merge($validator->validated(), ['ID' => $ran, 'Image' => $imageUrl]));
         return ApiResponse::sendresponse(201, 'Student stored Successfully ', new StudentResource($student));
     }
 

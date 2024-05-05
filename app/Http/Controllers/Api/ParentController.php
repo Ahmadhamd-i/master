@@ -49,7 +49,11 @@ class ParentController extends Controller
         );
 
         if ($request->hasFile('Image')) {
-            $imageData = $request->file('Image');
+            $imageFile = $request->file('Image');
+            $imageName = $imageFile->getClientOriginalName();
+
+            $imageFile->storeAs('public', $imageName);
+            $imageUrl = asset('storage/' . $imageName);
         } else {
             return response()->json(['error' => 'No file uploaded'], 400);
         }
@@ -59,7 +63,7 @@ class ParentController extends Controller
         }
         $parent = Parents::create(array_merge(
             $validator->validated(),
-            ['ID' => $ran, 'Password' => bcrypt($request->Password), 'Image' => $imageData]
+            ['ID' => $ran, 'Password' => bcrypt($request->Password), 'Image' => $imageUrl]
         ));
         return ApiResponse::sendresponse(201, 'Parent stored Successfully ', new ParentResource($parent));
     }
