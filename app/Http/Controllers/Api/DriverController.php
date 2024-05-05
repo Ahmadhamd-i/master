@@ -34,7 +34,7 @@ class DriverController extends Controller
         if ($request->hasFile('Image')) {
             $imageFile = $request->file('Image');
             $imagePath = 'Images/' . $imageFile->getClientOriginalName();
-            $imageFile->storeAs('public', $imagePath);
+            $imageFile->storeAs('public_Images', $imagePath);
         } else {
             return response()->json(['error' => 'No file uploaded'], 400);
         }
