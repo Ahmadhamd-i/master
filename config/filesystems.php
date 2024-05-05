@@ -43,12 +43,11 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
-
-
-        'public_Images' => [
+        'storage' => [
             'driver' => 'local',
-            'root' => storage_path('https://gp-saveurkid.up.railway.app/storage'),
-
+            'root' => public_path('storage'), // Path to your public directory
+            'url' => env('APP_URL') . '/storage', // URL to access the files
+            'visibility' => 'public',
         ],
 
         's3' => [

@@ -32,9 +32,19 @@ class DriverController extends Controller
         //$imageFile = $request->file('Image')->save(storage_path(path:'Images/'.$request->Image->hash_Name()));
 
         if ($request->hasFile('Image')) {
+            /*  $imageFile = $request->file('Image');
+            $imageName = $imageFile->getClientOriginalName();
+            $imageFile->storeAs('storage', $imageName, 'storage'); */
             $imageFile = $request->file('Image');
-            $imagePath = 'Images/' . $imageFile->getClientOriginalName();
-            $imageFile->storeAs('public_Images', $imagePath);
+            $imageName = $imageFile->getClientOriginalName();
+
+            //$imageFile->storeAs('public/storage', $imageName);
+
+            // If you want to store it without the 'public' directory prefix in the path, you can use:
+            $imageFile->storeAs('storage', $imageName, 'storage');
+
+            // You may also need to generate a URL for accessing the stored image
+            $imageUrl = asset('storage/' . $imageName);
         } else {
             return response()->json(['error' => 'No file uploaded'], 400);
         }
@@ -43,7 +53,7 @@ class DriverController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
-        $driverinfo = Driver::create(array_merge($validator->validated(), ['ID' => $ran, 'Image' => $imageFile]));
+        $driverinfo = Driver::create(array_merge($validator->validated(), ['ID' => $ran, 'Image' => $imageUrl]));
         return ApiResponse::sendresponse(201, 'Driver stored Successfully ', new DriverResource($driverinfo));
     }
 
