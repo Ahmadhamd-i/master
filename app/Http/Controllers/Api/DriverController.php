@@ -28,10 +28,8 @@ class DriverController extends Controller
         // Read the image file
 
         // Get the uploaded file
-        $imageFile = $request->file('Image');
-        if ($request->hasFile('Image')) {
-            $imageData = file_get_contents($imageFile->getRealPath());
-        } else {
+        $imageFile = $request->file('Image')->store('Image');
+        if (!$imageFile) {
             return response()->json(['error' => 'No file uploaded'], 400);
         }
 
@@ -39,7 +37,7 @@ class DriverController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
-        $driverinfo = Driver::create(array_merge($validator->validated(), ['ID' => $ran, 'Image' => $imageData]));
+        $driverinfo = Driver::create(array_merge($validator->validated(), ['ID' => $ran, 'Image' => $imageFile]));
         return ApiResponse::sendresponse(201, 'Driver stored Successfully ', new DriverResource($driverinfo));
     }
 
