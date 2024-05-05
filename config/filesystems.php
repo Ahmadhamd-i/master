@@ -47,7 +47,7 @@ return [
 
         'public_Images' => [
             'driver' => 'local',
-            'root' => storage_path('Images'),
+            'root' => storage_path('https://gp-saveurkid.up.railway.app/storage'),
 
         ],
 
