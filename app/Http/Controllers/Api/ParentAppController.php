@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\StudentResource;
+use App\Models\Enrollment;
 use App\Models\Student;
 use App\Models\Supervisor;
 use Illuminate\Http\Request;
@@ -30,6 +31,16 @@ class ParentAppController extends Controller
             return ApiResponse::sendresponse(200, 'Location For this Student\'s Supervisor ', $svLocation);
         } else {
             return ApiResponse::sendresponse(200, 'There\'s no Student have this ID');
+        }
+    }
+
+    public function get_Status($stID)
+    {
+        $status_data = Enrollment::where('student_ID', $stID)->first();
+        if ($status_data) {
+            return ApiResponse::sendresponse(200, 'Student Status ', $status_data);
+        } else {
+            return ApiResponse::sendresponse(200, 'Student not found');
         }
     }
 }

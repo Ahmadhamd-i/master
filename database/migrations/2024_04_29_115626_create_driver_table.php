@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('ID');
             $table->string('Full_Name');
             $table->binary('Image')->nullable()->default(NULL);
-            $table->integer('Phone');
+            $table->string('Phone');
             $table->string('Email');
         });
     }

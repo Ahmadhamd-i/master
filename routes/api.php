@@ -97,16 +97,22 @@ Route::group([
         Route::post('/Parentlogin', 'ParentLogin');
         // Route::post('/refresh', 'refresh');
     });
-    //apis SV App
+    //apis SV&&Parent App
     {
         Route::group(['middleware' => 'auth:sanctum'], function () {
-            Route::post('/getSVstudents', [SVappController::class, 'getrelatedStudents']); //SV
-            /*  Route::post('/getParentChild', [ParentAppController::class, 'getParentChild']); //Parent */
-            Route::get('/getstudent/{id}', [StudentController::class, 'getStudent']); //SV        
-            Route::post('/updateLocation/{id}', [SVappController::class, 'Sharelocation']); //SV
-            /* Route::get('/getStLoctaion/{id}', [ParentAppController::class, 'getStudentLoctaion']); //parent */
+            //SV
+            {
+                Route::post('/getSVstudents', [SVappController::class, 'getrelatedStudents']); //SV
+                Route::get('/getstudent/{id}', [StudentController::class, 'getStudent']); //SV        
+                Route::post('/updateLocation/{id}', [SVappController::class, 'Sharelocation']); //SV
+                Route::post('/changeStatus', [SVappController::class, 'change_status']); //SV
+            }
+            //Parent
+            {
+            }
         });
         Route::get('/getStLoctaion/{id}', [ParentAppController::class, 'getStudentLoctaion']); //parent
         Route::post('/getParentChild', [ParentAppController::class, 'getParentChild']); //Parent
+        Route::get('/getStatus/{id}', [ParentAppController::class, 'get_Status']); //Parent
     }
 }

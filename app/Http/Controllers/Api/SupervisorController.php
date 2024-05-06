@@ -101,7 +101,7 @@ class SupervisorController extends Controller
 
         $oldsupervisor = Supervisor::find($id);
         if (!$oldsupervisor) {
-            return response()->json(['message' => 'student not found'], 404);
+            return response()->json(['message' => 'Supervisor not found'], 404);
         }
 
         $supervisor->update([

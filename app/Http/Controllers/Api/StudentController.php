@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\StudentResource;
+use App\Models\Enrollment;
 use App\Models\Student;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -108,8 +109,11 @@ class StudentController extends Controller
 
     public function destroy($id)
     {
+        $enrollment = Enrollment::where('student_ID', $id)->first();
+        if ($enrollment) {
+            $enrollment->where('student_ID', $id)->delete();
+        }
         $student = Student::find($id);
-
         if (!$student) {
             return response()->json(['message' => 'Student not found'], 404);
         }

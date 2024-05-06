@@ -17,8 +17,7 @@ class EnrollmentResource extends JsonResource
         return [
             'student_ID' => $this->student_ID,
             'enroll_time' => $this->enroll_time,
-            'Enroll_Status' => $this->Enroll_Status,
-            'Bus_ID' => $this->Bus_ID,
+            'Student_Status' => $this->Student_Status,
         ];
     }
 }

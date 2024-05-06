@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('Password');
             $table->binary('Image')->nullable()->default(NULL);
             $table->string('Email');
-            $table->integer('Phone');
+            $table->string('Phone');
             $table->string('Address');
-            $table->string('location');
+            $table->string('location')->nullable()->default(NULL);
         });
     }
 
