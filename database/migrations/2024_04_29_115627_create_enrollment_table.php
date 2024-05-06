@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('enrollment', function (Blueprint $table) {
-            $table->foreignId('Student_ID')->constrained('student');
+            $table->id('Student_ID');
             $table->enum('Student_Status', ['On Bus', 'at Home', 'at School'])->default('at Home');
             $table->dateTime('enroll_time')->useCurrent();
         });
