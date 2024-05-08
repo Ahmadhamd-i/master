@@ -44,10 +44,6 @@ class BusesController extends Controller
         $buses = BusInfo::where('ID', $ID)->get();
         if ($buses) {
             return ApiResponse::sendresponse(200, "Bus", $buses);
-            /*  return response()->json([
-                'success' => true,
-                'Bus' => $Businfo,
-            ]); */
         } {
             return $this->apiresponse(null, 'Buses Table Not Found', 404);
         }
@@ -55,7 +51,7 @@ class BusesController extends Controller
 
     public function  update(Request $request, $ID)
     {
-        // Find the supervisor
+        // Find the Bus
         $bus = BusInfo::find($ID);
 
         if (!$bus) {
@@ -92,7 +88,7 @@ class BusesController extends Controller
             'Bus_License' => $request->Bus_License ?? $oldBusinfo->Bus_License,
         ]);
         $bus->save();
-        return response()->json(['message' => 'Bus updated successfully', 'Bus' => new BusesInfoResource($bus)], 201);
+        return ApiResponse::sendresponse(201, 'Bus Updated Successfuly', new BusesInfoResource($bus));
     }
 
 
@@ -105,6 +101,6 @@ class BusesController extends Controller
         }
 
         $Bus->destroy($id);
-        return response()->json(['message' => 'Bus deleted successfully'], 200);
+        return ApiResponse::sendresponse(200, 'Bus Deleted Successfuly');
     }
 }

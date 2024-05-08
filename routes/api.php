@@ -106,6 +106,7 @@ Route::group([
                 Route::get('/getstudent/{id}', [StudentController::class, 'getStudent']); //SV        
                 Route::post('/updateLocation/{id}', [SVappController::class, 'Sharelocation']); //SV
                 Route::post('/changeStatus', [SVappController::class, 'change_status']); //SV
+                Route::Post('/ChangeSVPassword/{id}', [SVappController::class, 'change_SV_password']); //SV
             }
             //Parent
             {
@@ -114,5 +115,7 @@ Route::group([
         Route::get('/getStLoctaion/{id}', [ParentAppController::class, 'getStudentLoctaion']); //parent
         Route::post('/getParentChild', [ParentAppController::class, 'getParentChild']); //Parent
         Route::get('/getStatus/{id}', [ParentAppController::class, 'get_Status']); //Parent
+        Route::Post('/ChangePassword/{id}', [ParentAppController::class, 'change_password']); //Parent
+
     }
 }

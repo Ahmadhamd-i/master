@@ -62,7 +62,7 @@ class SupervisorController extends Controller
     {
         $Supervisor = Supervisor::findOrFail($ID);
         if ($Supervisor) {
-            return ApiResponse::sendresponse(200, "Bus", new SupervisorResource($Supervisor));
+            return ApiResponse::sendresponse(200, "Supervisor", new SupervisorResource($Supervisor));
         } {
             return $this->apiresponse(null, 'Supervisor Table Not Found', 404);
         }

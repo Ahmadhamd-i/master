@@ -88,7 +88,7 @@ class ParentController extends Controller
         }
         $oldparent = Parents::find($id);
         if (!$oldparent) {
-            return response()->json(['message' => 'student not found'], 404);
+            return response()->json(['message' => 'Parent not found'], 404);
         }
         $Parent->update([
             'Full_Name' => $request->Full_Name ?? $oldparent->Full_Name,

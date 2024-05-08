@@ -11,6 +11,7 @@ use App\Models\Enrollment;
 use App\Models\Student;
 use App\Models\Supervisor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class SVappController extends Controller
@@ -84,6 +85,30 @@ class SVappController extends Controller
         } else {
             $studentStatus = Enrollment::create(array_merge($validator->validated()));
             return ApiResponse::sendresponse(201, 'Status Stored Successfully ', new EnrollmentResource($studentStatus));
+        }
+    }
+    public function change_SV_password(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'Old_Password' => 'string|required',
+            'Password' => 'string|required|confirmed',
+        ]);
+        if ($validator->fails()) {
+            return ApiResponse::sendresponse(422, 'Password Confirmation error', $validator->errors());
+        }
+        $supervisor = Supervisor::where('ID', $id)->first();
+        if ($supervisor) {
+            if (Hash::check($request->Old_Password, $supervisor->Password)) {
+                $supervisor->update([
+                    'Password' => bcrypt($request->Password),
+                ]);
+                $supervisor->save();
+                return ApiResponse::sendresponse(201, 'Password Changed Successfuly ');
+            } else {
+                return ApiResponse::sendresponse(200, 'The Password u enterd is Incorrect ');
+            }
+        } else {
+            return ApiResponse::sendresponse(200, 'supervisor not found');
         }
     }
 }

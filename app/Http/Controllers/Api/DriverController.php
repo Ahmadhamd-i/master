@@ -28,9 +28,6 @@ class DriverController extends Controller
         );
         // Read the image file
 
-        // Get the uploaded file
-        //$imageFile = $request->file('Image')->save(storage_path(path:'Images/'.$request->Image->hash_Name()));
-
         if ($request->hasFile('Image')) {
             $imageFile = $request->file('Image');
             $imageName = $imageFile->getClientOriginalName();
