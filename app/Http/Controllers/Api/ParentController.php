@@ -77,6 +77,9 @@ class ParentController extends Controller
             'address' => 'sometimes',
             'Phone' => 'sometimes',
         ]);
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Validation failed', 'errors' => $validator->errors()], 400);
+        }
 
         $Parent = Parents::find($id);
 
@@ -91,7 +94,7 @@ class ParentController extends Controller
             'Full_Name' => $request->Full_Name ?? $oldparent->Full_Name,
             'Email' => $request->Email ?? $oldparent->Email,
             'Phone' => $request->Phone ?? $oldparent->Phone,
-            'Address' => $request->address ?? $oldparent->Address,
+            'address' => $request->address ?? $oldparent->address,
         ]);
 
 
