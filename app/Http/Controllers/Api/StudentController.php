@@ -92,7 +92,7 @@ class StudentController extends Controller
             'Supervisor_ID' => $request->Supervisor_ID ?? $oldstudent->Supervisor_ID,
         ]);
         $student->save();
-        return response()->json(['message' => 'student updated successfully', 'student' => new StudentResource($student)], 201);
+        return ApiResponse::sendresponse(201, 'student updated successfully', new StudentResource($student));
     }
 
 

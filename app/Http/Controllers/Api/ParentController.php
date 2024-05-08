@@ -97,8 +97,7 @@ class ParentController extends Controller
             'address' => $request->address ?? $oldparent->address,
         ]);
 
-
-        return response()->json(['message' => 'Parent updated successfully', 'Parent' => new ParentResource($Parent)], 200);
+        return ApiResponse::sendresponse(201, "Parent updated successfully", new ParentResource($Parent));
     }
 
 
@@ -109,10 +108,10 @@ class ParentController extends Controller
         $Parent = Parents::find($id);
 
         if (!$Parent) {
-            return response()->json(['message' => 'Parent not found'], 404);
+            return ApiResponse::sendresponse(200, "parent Not found");
         }
 
         $Parent->destroy($id);
-        return response()->json(['message' => 'Parent deleted successfully'], 200);
+        return ApiResponse::sendresponse(200, "parent deleted successfully");
     }
 }

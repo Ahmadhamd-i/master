@@ -61,10 +61,6 @@ class DriverController extends Controller
         $Driver = Driver::findOrFail($ID);
         if ($Driver) {
             return ApiResponse::sendresponse(200, "Driver", new DriverResource($Driver));
-            /* return response()->json([
-                'success' => true,
-                'Driver' => new DriverResource($Driver), 200
-            ]); */
         } {
             return $this->apiresponse(null, 'Driver Table Not Found', 404);
         }
@@ -106,7 +102,7 @@ class DriverController extends Controller
 
         ]);
         $driver->save();
-        return response()->json(['message' => 'Driver updated successfully', 'Driver' => new DriverResource($driver)], 201);
+        return ApiResponse::sendresponse(201, 'Driver updated Successfully ', new DriverResource($driver));
     }
 
     public function destroy($id)

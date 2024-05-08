@@ -63,10 +63,6 @@ class SupervisorController extends Controller
         $Supervisor = Supervisor::findOrFail($ID);
         if ($Supervisor) {
             return ApiResponse::sendresponse(200, "Bus", new SupervisorResource($Supervisor));
-            /*  return response()->json([
-                'success' => true,
-                'Bus' => $Businfo,
-            ]); */
         } {
             return $this->apiresponse(null, 'Supervisor Table Not Found', 404);
         }
@@ -112,7 +108,7 @@ class SupervisorController extends Controller
             'location' => $request->location ?? $oldsupervisor->location,
         ]);
         $supervisor->save();
-        return response()->json(['message' => 'Supervisor updated successfully', 'supervisor' => new SupervisorResource($supervisor)], 201);
+        return ApiResponse::sendresponse(201, 'Supervisor updated successfully', new SupervisorResource($supervisor));
     }
 
     //Delete Function
