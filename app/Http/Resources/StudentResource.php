@@ -21,6 +21,7 @@ class StudentResource extends JsonResource
             'class' => $this->class,
             'Student Image' => $this->Image,
             'Parent_ID' => $this->Parent_ID,
+            'Supervisor_ID' => $this->Supervisor_ID,
         ];
     }
 }

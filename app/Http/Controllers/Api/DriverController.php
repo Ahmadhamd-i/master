@@ -23,7 +23,7 @@ class DriverController extends Controller
                 'Full_Name' => 'required',
                 'Phone' => 'required|numeric',
                 'Email' => 'email',
-                'Image' => 'required|image|mimes:jpeg,png,jpg|max:1024'
+                'Image' => 'sometimes|image|mimes:jpeg,png,jpg|max:1024'
             ]
         );
         // Read the image file

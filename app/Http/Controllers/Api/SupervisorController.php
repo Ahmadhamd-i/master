@@ -27,7 +27,7 @@ class SupervisorController extends Controller
                 'Password' => 'required ',
                 'Address' => 'string',
                 'location' => 'string',
-                'Image' => 'required|mimes:png,jpg,jpeg'
+                'Image' => 'sometimes|mimes:png,jpg,jpeg'
             ]
         );
 

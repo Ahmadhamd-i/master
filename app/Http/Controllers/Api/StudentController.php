@@ -25,7 +25,7 @@ class StudentController extends Controller
                 'grade' => 'required',
                 'class' => 'required',
                 'Supervisor_ID' => 'required',
-                'Image' => 'required|mimes:png,jpg,jpeg',
+                'Image' => 'sometimes|mimes:png,jpg,jpeg',
             ]
         );
 
