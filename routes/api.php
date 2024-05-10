@@ -107,6 +107,7 @@ Route::group([
                 Route::post('/updateLocation/{id}', [SVappController::class, 'Sharelocation']); //SV
                 Route::post('/changeStatus', [SVappController::class, 'change_status']); //SV
                 Route::Post('/ChangeSVPassword/{id}', [SVappController::class, 'change_SV_password']); //SV
+                Route::get('/student/show/{id}', [StudentController::class, 'getStudent']);
             }
             //Parent
             {
