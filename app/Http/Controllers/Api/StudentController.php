@@ -96,7 +96,7 @@ class StudentController extends Controller
     }
 
 
-    public function getStudent($ID) 
+    public function getStudent($ID)
     {
         $Student = Student::findOrFail($ID);
         if ($Student) {
@@ -106,7 +106,6 @@ class StudentController extends Controller
             return $this->apiresponse(null, 'Student Table Not Found', 404);
         }
     }
-
 
     public function destroy($id)
     {

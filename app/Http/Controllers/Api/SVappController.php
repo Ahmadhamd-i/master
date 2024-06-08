@@ -6,7 +6,7 @@ use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EnrollmentResource;
 use App\Http\Resources\StudentResource;
-use App\Http\Resources\SupervisorResource;
+//use App\Http\Resources\SupervisorResource;
 use App\Models\Enrollment;
 use App\Models\Student;
 use App\Models\Supervisor;
@@ -81,7 +81,6 @@ class SVappController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
-
 
         $student = Student::find($request->student_ID);
         if (!$student) {
