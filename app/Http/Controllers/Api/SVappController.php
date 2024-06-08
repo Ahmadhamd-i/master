@@ -6,7 +6,7 @@ use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EnrollmentResource;
 use App\Http\Resources\StudentResource;
-//use App\Http\Resources\SupervisorResource;
+use App\Http\Resources\SupervisorResource;
 use App\Models\Enrollment;
 use App\Models\Student;
 use App\Models\Supervisor;
