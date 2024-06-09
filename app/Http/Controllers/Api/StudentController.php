@@ -103,7 +103,7 @@ class StudentController extends Controller
 
             return Apiresponse::sendresponse(200, "Student", new StudentResource($Student));
         } {
-            return $this->apiresponse(null, 'Student Table Not Found', 404);
+            return $this->apiresponse(null, 'Student Not Found', 200);
         }
     }
 
