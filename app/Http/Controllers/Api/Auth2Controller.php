@@ -81,7 +81,7 @@ class Auth2Controller extends Controller
                 $data['Parent Image'] = $Parent->Image;
                 return ApiResponse::sendresponse(200, 'Logged In Successfully', $data);
             } else {
-                return ApiResponse::sendresponse(422, 'Login Failed Check the email and password again', null);
+                return ApiResponse::sendresponse(422, 'Login Failed Check the email OR the password again', null);
             }
         } else {
             return ApiResponse::sendresponse(401, 'Enter a valid email', null);
