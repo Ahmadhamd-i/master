@@ -57,6 +57,19 @@ class SVappController extends Controller
         return response()->json(['message' => 'Supervisor Location sent successfully', 'Location ' => $data], 201);
     }
 
+    public function getStudent($ID) //For Web dashboard
+    {
+        $Student = Student::findOrFail($ID);
+        if ($Student) {
+
+            return Apiresponse::sendresponse(200, "Student", new StudentResource($Student));
+        }
+        else
+        {
+            return $this->apiresponse(null, 'Student Not Found', 200);
+        }
+    }
+
     public function change_status(Request $request)
     {
 

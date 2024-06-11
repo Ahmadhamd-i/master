@@ -63,7 +63,7 @@ Route::group([
         //Student
         {
             Route::get('/student/getall', [StudentController::class, 'index']);
-            Route::get('/student/show/{id}', [StudentController::class, 'getStudent']);
+            Route::get('/Student/Show/{id}', [StudentController::class, 'getStudent']);
             Route::Post('/student/store', [StudentController::class, 'store']);
             Route::post('/student/update/{id}', [StudentController::class, 'update']);
             Route::delete('/student/delete/{id}', [StudentController::class, 'destroy']);
@@ -103,7 +103,7 @@ Route::group([
             //SV
             {
                 Route::post('/getSVstudents', [SVappController::class, 'getrelatedStudents']); //SV
-                Route::get('/getstudent/{id}', [StudentController::class, 'getStudent']); //SV        
+                Route::get('/getstudent/{id}', [SVappController::class, 'getStudent']); //SV
                 Route::post('/updateLocation/{id}', [SVappController::class, 'Sharelocation']); //SV
                 Route::post('/changeStatus', [SVappController::class, 'change_status']); //SV
                 Route::Post('/ChangeSVPassword/{id}', [SVappController::class, 'change_SV_password']); //SV
