@@ -87,7 +87,7 @@ Route::group([
     });
 }
 
-//Application Apis
+//Application login Apis
 {
     //LogIn And LogOut Supervisor Parent
 
